@@ -1,7 +1,9 @@
 const fs = require("fs");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { clientId, guildId, token } = require("./config.json");
+
+const testing = false;
+const { clientId, guildId, token } = require(`./${testing ? "testing_" : ""}config.json`);
 
 const commands = [];
 const commandFiles = fs
@@ -15,6 +17,14 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: "9" }).setToken(token);
 
+// Register commands for test guild
 rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-    .then(() => console.log("Successfully registered application commands."))
+    .then(() => console.log("Successfully registered guild commands."))
     .catch(console.error);
+
+// Register commands globally
+if (!testing) {
+  rest.put(Routes.applicationCommands(clientId), { body: commands })
+      .then(() => console.log("Successfully registered commands globally."))
+      .catch(console.error);
+}

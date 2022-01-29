@@ -1,7 +1,9 @@
 // Require the necessary discord.js classes
 const { Client, Intents, MessageEmbed, Collection } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { token } = require("./config.json");
+
+const testing = false;
+const { token } = require(`./${testing ? "testing_" : ""}config.json`);
 
 // Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });

@@ -4,7 +4,7 @@ const { MessageEmbed, Permissions, GuildMember } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("move")
-    .setDescription("Move...ing in with ur mother!")
+    .setDescription("Move pins from one channel to another")
     .addChannelOption(option => option.setName('destination').setDescription('Select a channel')),
 
   async execute(interaction, props) {
@@ -22,12 +22,12 @@ module.exports = {
     };
 
     const curr_channel = props.client.channels.cache.get(interaction.channelId); // channel command was sent from
-    const pins = curr_channel.messages.fetchPinned().then((data) => {
-      console.log(data);
+    curr_channel.messages.fetchPinned().then((data) => {
       data.forEach((item, i) => {
         // I could... get embed with you ahaha
-        let messageAttachment = item.attachments.size > 0 ? [...item.attachments][0].url : null; // Check for attachments?? (broken does not)
-        const pinEmbed = {
+        let message_attachment = item.attachments.size > 0 ? item.attachments.map(a => a.url)[0] : null; // Check for attachments?? (broken does not)
+        const pin_embed = {
+          color: item.member.displayHexColor,
           author: {
         	   name: item.author.username,
              icon_url: `https://cdn.discordapp.com/avatars/${item.author.id}/${item.author.avatar}`,
@@ -36,19 +36,17 @@ module.exports = {
           description: item.content,
           timestamp: new Date(),
           image: {
-            url: messageAttachment,
+            url: message_attachment,
           },
           footer: {
         		text: 'Forever pinned in our hearts',
         		icon_url: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/79/pushpin_1f4cc.png',
         	},
         };
-        destination_channel.send({ embeds: [pinEmbed] });
-        // TODO: Images don't show up in the embed so that is a thing
-        // item.unpin(); // but I could pin you ahaha (commented out for testing)
+        destination_channel.send({ embeds: [pin_embed] });
+        // item.unpin(); // but I could pin you ahaha
       });
     });
-    // TODO: Button to confirm the move (?)
     await interaction.reply(`Moving to ${destination_channel}`);
   },
 };
