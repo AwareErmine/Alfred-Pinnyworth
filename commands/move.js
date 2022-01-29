@@ -23,18 +23,19 @@ module.exports = {
 
     const curr_channel = props.client.channels.cache.get(interaction.channelId); // channel command was sent from
     curr_channel.messages.fetchPinned().then((data) => {
-      data.forEach((item, i) => {
+      data.reverse().forEach((item, i) => {
         // I could... get embed with you ahaha
         let message_attachment = item.attachments.size > 0 ? item.attachments.map(a => a.url)[0] : null; // Check for attachments?? (broken does not)
+        // console.log(item.createdTimestamp);
         const pin_embed = {
-          color: item.member.displayHexColor,
+          color: (item.member ? item.member.displayHexColor : null),
           author: {
         	   name: item.author.username,
              icon_url: `https://cdn.discordapp.com/avatars/${item.author.id}/${item.author.avatar}`,
              url: `https://discord.com/channels/${interaction.guildId}/${interaction.channelId}/${item.id}`,
         	},
           description: item.content,
-          timestamp: new Date(),
+          timestamp: new Date(item.createdTimestamp), // I could have a... new date with you
           image: {
             url: message_attachment,
           },

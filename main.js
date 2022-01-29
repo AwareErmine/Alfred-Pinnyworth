@@ -2,7 +2,7 @@
 const { Client, Intents, MessageEmbed, Collection } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
-const testing = false;
+const { testing } = require('./config.json');
 const { token } = require(`./${testing ? "testing_" : ""}config.json`);
 
 // Create a new client instance
