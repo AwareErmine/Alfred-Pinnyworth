@@ -5,8 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("move")
     .setDescription("Move pins from one channel to another")
-    .addChannelOption(option => option.setName('destination').setDescription('Select a channel')),
-
+    .addChannelOption(option => option.setName('destination').setDescription('Select a channel').setRequired(true)),
   async execute(interaction, props) {
     // Check if the user can things
     if (!interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
@@ -14,13 +13,7 @@ module.exports = {
       return;
     }
 
-    // Check they gave a channel with the commands thing
     const destination_channel = interaction.options.getChannel('destination');
-    if (destination_channel === null) {
-      await interaction.reply("Pick a channel to move the pins into, silly goose!");
-      return;
-    };
-
     const curr_channel = props.client.channels.cache.get(interaction.channelId); // channel command was sent from
     curr_channel.messages.fetchPinned().then((data) => {
       data.reverse().forEach((item, i) => {
@@ -45,9 +38,13 @@ module.exports = {
         	},
         };
         destination_channel.send({ embeds: [pin_embed] });
-        // item.unpin(); // but I could pin you ahaha
       });
     });
-    await interaction.reply(`Moving to ${destination_channel}`);
+
+    try {
+      await interaction.reply(`Moving to ${destination_channel}`);
+    } catch { // When we call move elsewhere and respond already
+      return;
+    }
   },
 };
