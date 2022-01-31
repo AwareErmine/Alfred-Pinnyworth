@@ -18,10 +18,9 @@ module.exports = {
     curr_channel.messages.fetchPinned().then((data) => {
       data.reverse().forEach((item, i) => {
         // I could... get embed with you ahaha
-        let message_attachment = item.attachments.size > 0 ? item.attachments.map(a => a.url)[0] : null; // Check for attachments?? (broken does not)
-        // console.log(item.createdTimestamp);
+        let message_attachment = item.attachments?.map(a => a.url)[0];
         const pin_embed = {
-          color: (item.member ? item.member.displayHexColor : null),
+          color: item.member?.displayHexColor,
           author: {
         	   name: item.author.username,
              icon_url: `https://cdn.discordapp.com/avatars/${item.author.id}/${item.author.avatar}`,
