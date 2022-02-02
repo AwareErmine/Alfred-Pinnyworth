@@ -33,7 +33,7 @@ module.exports = {
         collector.on("collect", async (click) => {
           const replies = {
             cancel: "Cancelled!",
-            confirm: `Removing ${interaction.options.getSubcommand() === "move" ? "and moving" : ""} pins...`,
+            confirm: `Removing ${interaction.options.getSubcommand() === "move" ? "and moving" : ""} pins to ${interaction.options.getChannel('destination')}`,
           };
           const newReply = replies[click.customId];
           if (click.customId === "confirm") {

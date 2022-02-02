@@ -6,14 +6,20 @@ const { testing } = require('./config.json');
 const { token } = require(`./${testing ? "testing_" : ""}config.json`);
 
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_MESSAGES,
+  ]
+});
 
 const fs = require("fs");
 client.commands = new Collection();
 
 // When the client is ready, run this code (only once)
 client.once("ready", () => {
-    console.log("Ready!");
+    console.log("Consider thyself ready");
 });
 
 // Get all commands and store them

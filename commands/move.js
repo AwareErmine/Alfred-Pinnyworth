@@ -32,7 +32,7 @@ module.exports = {
             url: message_attachment,
           },
           footer: {
-        		text: 'Forever pinned in our hearts',
+        		text: `Forever pinned in ${curr_channel.name} in our hearts`,
         		icon_url: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/79/pushpin_1f4cc.png',
         	},
         };
