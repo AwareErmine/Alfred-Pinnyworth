@@ -4,7 +4,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 require("dotenv").config();
 const testing = process.env.TESTING;
-const token = process.env.CLIENT_TOKEN;
+const token = testing ? process.env.TEST_CLIENT_TOKEN : process.env.CLIENT_TOKEN;
 
 // Create a new client instance
 const client = new Client({

@@ -4,9 +4,9 @@ const { Routes } = require("discord-api-types/v9");
 
 require("dotenv").config();
 const testing = process.env.TESTING;
-const clientId = process.env.CLIENT_ID;
-const guildId = process.env.GUILD_ID;
-const token = process.env.CLIENT_TOKEN;
+const clientId = testing ? process.env.TEST_CLIENT_ID : process.env.CLIENT_ID;
+const guildId = testing ? process.env.TEST_GUILD_ID : process.env.GUILD_ID;
+const token = testing ? process.env.TEST_CLIENT_TOKEN : process.env.CLIENT_TOKEN;
 
 const commands = [];
 const commandFiles = fs
