@@ -15,6 +15,8 @@ const client = new Client({
   ]
 });
 
+client.application.commands.set([]);
+
 const fs = require("fs");
 client.commands = new Collection();
 
