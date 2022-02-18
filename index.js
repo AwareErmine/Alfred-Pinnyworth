@@ -15,7 +15,7 @@ const client = new Client({
   ]
 });
 
-client.application.commands.set([]);
+// client.application.commands.set([]); // reset commands?
 
 const fs = require("fs");
 client.commands = new Collection();
