@@ -13,14 +13,14 @@ module.exports = {
             color: "#DD2E44",
             fields: [
               {
-                name: `You have ${50 - pin_count} pin${50 - pin_count > 1 ? "s" : ""} left`,
+                name: `You have ${50 - pin_count} pin${50 - pin_count !== 1 ? "s" : ""} left`,
                 value: "📌".repeat(50 - pin_count),
                 inline: false,
               }
             ],
             timestamp: new Date(),
           };
-          interaction.reply({ embeds: [count_embed] });
+          interaction.reply({ embeds: [count_embed], ephemeral: true });
         });
     },
 };
