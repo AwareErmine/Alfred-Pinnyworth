@@ -9,7 +9,7 @@ module.exports = {
         curr_channel.messages.fetchPinned().then((data) => {
           var pin_count = [...data].length;
           const count_embed = {
-            title: `${curr_channel.name} has ${pin_count} pin${pin_count > 1 ? "s" : ""}`,
+            title: `${curr_channel.name} has ${pin_count} pin${pin_count !== 1 ? "s" : ""}`,
             color: "#DD2E44",
             fields: [
               {
